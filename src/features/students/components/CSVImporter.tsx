@@ -3,7 +3,7 @@
 import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Upload, FileUp, CheckCircle, AlertCircle, Loader2 } from "lucide-react"
+import { Upload, FileUp, CheckCircle, AlertCircle, Loader2, Download } from "lucide-react"
 import { importStudents } from "../actions"
 import {
     Dialog,
@@ -80,6 +80,15 @@ export function CSVImporter({ onSuccess }: { onSuccess: () => void }) {
                     </DialogDescription>
                 </DialogHeader>
 
+                <div className="flex justify-end">
+                    <Button variant="link" size="sm" asChild className="text-blue-600 h-auto p-0">
+                        <a href="/templates/student_template.csv" download>
+                            <Download className="mr-1 h-3 w-3" />
+                            ดาวน์โหลดไฟล์ต้นแบบ (.csv)
+                        </a>
+                    </Button>
+                </div>
+
                 <div className="grid gap-6 py-4">
                     <div className="space-y-2 border-2 border-dashed rounded-lg p-6 text-center bg-gray-50 hover:bg-gray-100 transition-colors cursor-pointer relative">
                         <input
@@ -104,10 +113,14 @@ export function CSVImporter({ onSuccess }: { onSuccess: () => void }) {
                     </div>
 
                     <div className="bg-blue-50 p-4 rounded-md border border-blue-100">
-                        <h4 className="text-sm font-bold text-blue-900 mb-2">รูปแบบหัวตารางที่รองรับ:</h4>
-                        <p className="text-xs text-blue-700 leading-relaxed">
-                            รหัสนักเรียน (id), ชื่อ-นามสกุล (full_name), อีเมล (email), ชั้น/ห้อง (class), แผนกวิชา (department)
-                        </p>
+                        <h4 className="text-sm font-bold text-blue-900 mb-2">ข้อแนะนำในการเตรียมไฟล์:</h4>
+                        <ul className="text-xs text-blue-700 space-y-1 ml-4 list-disc">
+                            <li>รองรับไฟล์ .csv (UTF-8) เท่านั้น</li>
+                            <li><strong>จำเป็น:</strong> รหัสนักเรียน (id), ชื่อ-นามสกุล (full_name)</li>
+                            <li><strong>แนะนำ:</strong> เลขประจำตัวประชาชน (national_id) สำหรับใช้เช็คผล</li>
+                            <li>สามารถใช้หัวตารางภาษาไทยได้ (ตามไฟล์ต้นแบบ)</li>
+                            <li>แนะนำให้อัปโหลดไม่เกิน 1,000 รายการต่อครั้ง</li>
+                        </ul>
                     </div>
 
                     {error && (
